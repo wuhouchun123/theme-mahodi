@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Lockscreen displayDesktop="true" frameRate="60" screenWidth="1080" showSysWallpaper="false" version="1">
+	<Var name="hour" expression="ifelse(#time_format,#hour24,#hour12,#hour12,12)" />
+	<Var name="varr">
+		<VariableAnimation>
+			<AniFrame value="0" time="100" />
+			<AniFrame value="20" time="140" />
+			<AniFrame value="40" time="180" />
+			<AniFrame value="20" time="220" />
+			<AniFrame value="0" time="300" />
+			<AniFrame value="0" time="6000000" />
+		</VariableAnimation>
+	</Var>
+	<VarArray type="string">
+		<Vars>
+			<Var name="jia" index="#nian_l" />
+		</Vars>
+		<Items>
+			<Item value="庚" />
+			<Item value="辛" />
+			<Item value="壬" />
+			<Item value="癸" />
+			<Item value="甲" />
+			<Item value="乙" />
+			<Item value="丙" />
+			<Item value="丁" />
+			<Item value="戊" />
+			<Item value="己" />
+		</Items>
+	</VarArray>
+	<VarArray type="string">
+		<Vars>
+			<Var name="zzi" index="#nian_2" />
+		</Vars>
+		<Items>
+			<Item value="子" />
+			<Item value="丑" />
+			<Item value="寅" />
+			<Item value="卯" />
+			<Item value="辰" />
+			<Item value="巳" />
+			<Item value="午" />
+			<Item value="未" />
+			<Item value="申" />
+			<Item value="酉" />
+			<Item value="戌" />
+			<Item value="亥" />
+		</Items>
+	</VarArray>
+    <Healthy polling="true" time="5" >
+        <Var name="steps_value" />
+     </Healthy>
+	 <Weather>
+        <Var expression="0" name="Weather.today.weatherid" type="int"/>
+        <!-- 今天天气 -->
+        <!-- <Var expression="0" name="Weather.today.weatherDes" type="string"/> -->
+        <!-- 今天天气 -->
+        <Var expression="0" name="Weather.today.currentTem" type="int"/>
+        <!-- 当前气温 -->
+        <!-- <Var expression="0" name="Weather.today.maxtemp" type="string"/> -->
+        <!-- 最高气温 -->
+        <!-- <Var expression="0" name="Weather.today.mintemp" type="string"/> -->
+        <!-- 最低气温 -->
+        <!-- <Var expression="0" name="Weather.today.winddirDes" type="string"/> -->
+        <!-- 风向 -->
+        <!--Var name="Weather.today.dressingLevel" expression="0" type="string"/-->
+        <!-- 穿衣 -->
+        <!-- <Var expression="0" name="Weather.today.humidity" type="string"/> -->
+        <!-- 湿度 -->
+        <!-- <Var expression="0" name="Weather.today.aqivaluetext" type="string"/> -->
+        <!-- 空气 -->
+        <!--Var name="Weather.today.sportsLevel" expression="0" type="string"/-->
+        <!-- 运动 -->
+        <!-- <Var expression="0" name="Weather.today.coldLevel" type="string"/> -->
+        <!-- 感冒 -->
+        <!-- <Var expression="0" name="Weather.today.carWashLevel" type="string"/> -->
+        <!-- 洗车 -->
+        <!-- <Var expression="0" name="Weather.today.sunRise" type="string"/> -->
+        <!-- 日出 -->
+        <!-- <Var expression="0" name="Weather.today.sunSet" type="string"/> -->
+        <!-- 日落 -->
+    </Weather>
+	<!-- 开关屏 -->
+	<ExternalCommands>
+		<Trigger action="resume">
+			<VariableCommand expression="0" name="chongdian_2_onoff" />
+			<VariableCommand expression="0" name="move_x" />
+			<VariableCommand expression="0" name="move_y" />
+			<VariableCommand expression="0" name="#slider.move_x" />
+			<VariableCommand expression="0" name="kaishi" />
+			<VariableCommand expression="1" name="zheng" />
+			<VariableCommand expression="0" name="diy_onoff" />
+			<VariableCommand expression="0" name="you_onoff" />
+			<VariableCommand expression="0" name="left_onoff" />
+			<VariableCommand expression="0" name="right_onoff" />
+			<VariableCommand expression="0" name="diy_btn" />
+			<VariableCommand expression="0" name="xiangji_changan" />
+			<Command target="time1.animation" value="play" condition="" delay="" delayCondition=""/>
+		</Trigger>
+		<Trigger action="pause">
+			<SoundCommand sound="kong.mp3" volume="0" loop="false" keepCur="false" />
+		</Trigger>
+	</ExternalCommands>
+	<!-- <Var name="move_x" expression="ifelse(le(#kaishi+#slider.move_x,0),0,ge(#kaishi+#slider.move_x,1080),1080,#kaishi+#slider.move_x)" visibility="ne(#shijian,14)*eq(#kuaijie_app,0)" />
+	<Var name="move_x" expression="0" visibility="eq(#shijian,14)*eq(#kuaijie_app,0)" /> -->
+	<Var name="move_x" expression="0" />
+	<!-- <Var name="move_x" expression="0" /> -->
+	<Var name="TimeAlpha_2" expression="#move_x/1080*450" />
+	<Slider bounceInitSpeed="3000" bounceAcceleration="3000" name="slider" visibility="ne(#shijian,14)*eq(#kuaijie_app,0)">
+		<StartPoint x="#touch_begin_x" y="#touch_begin_y" w="1" h="1" />
+		<EndPoint x="#touch_x" y="ifelse(ge(abs(#touch_begin_x-#touch_x),200),#touch_y,-1)" w="1" h="1">
+				<Trigger>
+					<VariableCommand name="lunbo" expression="1" />
+					<VariableCommand name="zhi" expression="#slider.move_x" />
+					<VariableCommand name="zheng" expression="-1" condition="ge((#touch_x-#touch_begin_x),200)" />
+					<VariableCommand name="zheng" expression="1" condition="ge((#touch_begin_x-#touch_x),200)" />
+					<VariableCommand name="sudu" expression="0" condition="ge(abs(#touch_begin_x-#touch_x),200)" />
+					<VariableCommand name="slider.move_x" expression="0" />
+					<VariableCommand name="kaishi1" expression="#kaishi+#zhi" />
+					<VariableCommand name="kaishi" expression="#kaishi+#zhi" />
+				</Trigger>
+		</EndPoint>
+	</Slider>
+	<Var name="kongzhi" expression="#time*eq(#lunbo,1)" threshold="1" visibility="ne(#shijian,14)*eq(#kuaijie_app,0)">
+		<Trigger>
+			<VariableCommand name="sudu" expression="ifelse(ge(#sudu,30),30,#sudu+4)" />
+			<VariableCommand name="kaishi" expression="#kaishi1+(1080*eq(#zheng,-1)-#kaishi1)*(sin(#sudu/30*3.1415926/2))" />
+		</Trigger>
+	</Var>
+	<VariableBinders>
+		<SensorBinder type="accelerometer">
+			<Variable name="x_1" index="0" />
+			<Variable name="y_1" index="1" />
+		</SensorBinder>
+	</VariableBinders>
+	<Var name="zl_x" expression="ifelse(ge((#x_1)*20,135),135,le((#x_1)*20,-135),-135,(#x_1)*20)" />
+	<Image x="#screen_width/2" y="#screen_height/2" alignV="center" align="center" w="#screen_width" h="#screen_height" src="bg.jpg" />
+	<!-- visibility="eq(#zidingyibizhi,0)" -->
+	<!-- <Image x="#screen_width/2" y="#screen_height/2" alignV="center" align="center" src="bg.jpg" visibility="eq(#zidingyibizhi,0)" /> -->
+
+	<!-- 充电 -->
+	<!-- 充电中 -->
+	<Group visibility="eq(#battery_state,1)" x="0" y="#move_y/5">
+		<!-- 整屏蓝 -->
+		<Group visibility="eq(#chongdian_2_onoff,0)">
+			<Image x="#screen_width/2" y="#screen_height/2" category="Charging" paras="#battery_level" align="center" alignV="center" w="#screen_width" h="#screen_height" src="diy_3/charge_2/hei_ceng.png" />
+			<Image x="#screen_width/2" y="#screen_height" category="Charging" paras="#battery_level" align="center" alignV="bottom" w="#screen_width" h="(#battery_level/100)*#screen_height" src="diy_3/charge_2/bolang_0.png" />
+			<Image x="0" y="#screen_height-(#battery_level/100)*#screen_height" category="Charging" paras="#battery_level" align="left" alignV="bottom" w="#screen_width*2" h="36" src="diy_3/charge_2/bolang_1.png" alpha="120">
+				<PositionAnimation>
+					<Position x="0" y="0" time="0" />
+					<Position x="-#screen_width" y="0" time="3600" />
+					<Position x="0" y="0" time="3600" />
+				</PositionAnimation>
+			</Image>
+			<Image x="0" y="#screen_height-(#battery_level/100)*#screen_height" category="Charging" paras="#battery_level" align="left" alignV="bottom" w="#screen_width*2" h="36" src="diy_3/charge_2/bolang_1.png">
+				<PositionAnimation>
+					<Position x="0" y="0" time="0" />
+					<Position x="-#screen_width" y="0" time="2000" />
+					<Position x="0" y="0" time="2000" />
+				</PositionAnimation>
+			</Image>
+			<Image x="#screen_width/2" y="#screen_height/2+100" category="Charging" paras="#battery_level" align="center" alignV="center" w="191" h="228" src="diy_3/charge_2/dian.png">
+			</Image>
+			<Text x="#screen_width/2" y="#screen_height/2-140" category="Charging" align="center" alignV="center" color="#ffffff" size="150" format="%d%%" alpha="255" paras="#battery_level" />
+			<Button x="0" y="0" w="#screen_width" h="#screen_height-150" visibility="eq(#chongdian_2_onoff,0)">
+				<Triggers>
+					<Trigger action="up">
+						<VariableCommand name="chongdian_2_onoff" expression="1" />
+					</Trigger>
+				</Triggers>
+			</Button>
+		</Group>
+	</Group>
+	<!-- 低电量 -->
+	<Group visibility="eq(#battery_state,2)" x="#move_x">
+		<Text x="#screen_width/2" y="#screen_height-(120)" align="center" alignV="center" size="36" color="#bbffffff" format="只剩 %d%%" paras="#battery_level" visibility="eq(#heibai,0)" />
+		<Text x="#screen_width/2" y="#screen_height-(120)" align="center" alignV="center" size="36" color="#bb000000" format="只剩 %d%%" paras="#battery_level" visibility="eq(#heibai,1)" />
+	</Group>
+	<!-- 已充满 -->
+	<Group visibility="eq(#battery_state,3)" x="#move_x">
+		<Text x="#screen_width/2" y="#screen_height-(120)" align="center" alignV="center" size="36" color="#bbffffff" format="已充满 %d%%" paras="#battery_level" visibility="eq(#heibai,0)" />
+		<Text x="#screen_width/2" y="#screen_height-(120)" align="center" alignV="center" size="36" color="#bb000000" format="已充满 %d%%" paras="#battery_level" visibility="eq(#heibai,1)" />
+	</Group>
+
+	<Group x="#DefaultScreen_move_go" y="#move_y/5">
+		<Group y="0" alpha="255">
+			<!-- 时间样式1: 横式中间 -->
+			<Group x="#screen_width/2" y="300+60" align="center" alignV="center" visibility="eq(#shijian,0)">
+				<!-- 字体0 -->
+				<Group>
+					<Group>
+						<Group y="70">
+							<Group visibility="eq(#ziti,0)">
+								<!-- <Image x="0" y="-55" align="center" alignV="center" scale="1" src="img/time_0.png" alpha="255" visibility="eq(#shijian,0)" /> -->
+								<Image x="-230-42-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_0/time.png" srcid="int(#hour/10)" alpha="255">
+								</Image>
+								<Image x="-100-16-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_0/time.png" srcid="int(#hour%10)" alpha="255">
+								</Image>
+								<Image x="0-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_0/time_dot.png" alpha="255">
+								</Image>
+								<Image x="100+16-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_0/time.png" srcid="int(#minute/10)" alpha="255">
+								</Image>
+								<Image x="230+42-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_0/time.png" srcid="int(#minute%10)" alpha="255">
+							</Image>
+							</Group>
+							<PositionAnimation>
+								<Position x="0" y="0" time="0"/>
+								<Position x="0" y="-80" time="700"/>
+								<Position x="0" y="-80" time="500000000"/>
+							</PositionAnimation>
+							<AlphaAnimation> 
+								<Alpha a="0" time="0"/>  
+								<Alpha a="255" time="1000"/>  
+								<Alpha a="255" time="5000000000"/>  
+							</AlphaAnimation>
+						</Group>
+						<Group y="70">
+							<Group visibility="eq(#ziti,1)">
+								<!-- <Image x="0" y="-55" align="center" alignV="center" scale="1" src="img/time_0.png" alpha="255" visibility="eq(#shijian,0)" /> -->
+								<Image x="-230-42-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_1/time.png" srcid="int(#hour/10)" alpha="255">
+								</Image>
+								<Image x="-100-16-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_1/time.png" srcid="int(#hour%10)" alpha="255">
+								</Image>
+								<Image x="0-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_1/time_dot.png" alpha="255">
+								</Image>
+								<Image x="100+16-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_1/time.png" srcid="int(#minute/10)" alpha="255">
+								</Image>
+								<Image x="230+42-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_1/time.png" srcid="int(#minute%10)" alpha="255">
+								</Image>
+							</Group>
+							<PositionAnimation>
+								<Position x="0" y="0" time="0"/>
+								<Position x="0" y="-80" time="700"/>
+								<Position x="0" y="-80" time="500000000"/>
+							</PositionAnimation>
+							<AlphaAnimation> 
+								<Alpha a="0" time="0"/>  
+								<Alpha a="255" time="1000"/>  
+								<Alpha a="255" time="5000000000"/>  
+							</AlphaAnimation>
+						</Group>
+						<Group y="70">
+							<Group visibility="eq(#ziti,2)">						
+								<!-- <Image x="0" y="-55" align="center" alignV="center" scale="1" src="img/time_0.png" alpha="255" visibility="eq(#shijian,0)" /> -->
+								<Image x="-230-42-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_2/time.png" srcid="int(#hour/10)" alpha="255">
+								</Image>
+								<Image x="-100-16-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_2/time.png" srcid="int(#hour%10)" alpha="255">
+								</Image>
+								<Image x="0-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_2/time_dot.png" alpha="255">
+								</Image>
+								<Image x="100+16-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_2/time.png" srcid="int(#minute/10)" alpha="255">
+								</Image>
+								<Image x="230+42-4" y="120+15" align="center" alignV="center" scale="1" src="ziti/ziti_2/time.png" srcid="int(#minute%10)" alpha="255">
+								</Image>
+							</Group>
+							<PositionAnimation>
+								<Position x="0" y="0" time="0"/>
+								<Position x="0" y="-80" time="700"/>
+								<Position x="0" y="-80" time="500000000"/>
+							</PositionAnimation>
+							<AlphaAnimation> 
+								<Alpha a="0" time="0"/>  
+								<Alpha a="255" time="1000"/>  
+								<Alpha a="255" time="5000000000"/>  
+							</AlphaAnimation>
+						</Group>
+					</Group>
+					<DateTime x="0" y="276+22+80" align="center" alignV="center" size="42" color="#ffffff" format="M月d日 EEEE 农历NNNN" alpha="255" visibility="eq(#heibai,0)">
+						<PositionAnimation>
+							<Position x="0" y="0" time="100"/>
+							<Position x="0" y="-80" time="800"/>
+							<Position x="0" y="-80" time="500000000"/>
+						</PositionAnimation>
+						<AlphaAnimation> 
+							<Alpha a="0" time="150"/>  
+							<Alpha a="255" time="1100"/>  
+							<Alpha a="255" time="5000000000"/>  
+						</AlphaAnimation>
+					</DateTime>
+				</Group>
+			</Group>
+			<!-- 时间样式1: 竖式中间 -->
+			<Group x="#screen_width/2" y="600" align="center" alignV="center" visibility="eq(#shijian,1)">
+				<!-- 字体0 -->
+				<Group>
+					<Group>
+						<Group visibility="eq(#ziti,0)">
+							<Image x="-72-8" y="-112-20" align="center" alignV="center" scale="1" src="ziti/ziti_0/time.png" srcid="int(#hour/10)" alpha="255" />
+							<Image x="72+8" y="-112-20" align="center" alignV="center" scale="1" src="ziti/ziti_0/time.png" srcid="int(#hour%10)" alpha="255" />
+							<Image x="-72-8" y="112" align="center" alignV="center" scale="1" src="ziti/ziti_0/time.png" srcid="int(#minute/10)" alpha="255" />
+							<Image x="72+8" y="112" align="center" alignV="center" scale="1" src="ziti/ziti_0/time.png" srcid="int(#minute%10)" alpha="255" />
+						</Group>
+						<PositionAnimation>
+							<Position x="0" y="0" time="0"/>
+							<Position x="0" y="-80" time="700"/>
+							<Position x="0" y="-80" time="500000000"/>
+						</PositionAnimation>
+						<AlphaAnimation> 
+							<Alpha a="0" time="0"/>  
+							<Alpha a="255" time="1000"/>  
+							<Alpha a="255" time="5000000000"/>  
+						</AlphaAnimation>
+					</Group>
+					<Group>
+						<Group visibility="eq(#ziti,1)">
+							<Image x="-72-8" y="-112-20" align="center" alignV="center" scale="1" src="ziti/ziti_1/time.png" srcid="int(#hour/10)" alpha="255" />
+							<Image x="72+8" y="-112-20" align="center" alignV="center" scale="1" src="ziti/ziti_1/time.png" srcid="int(#hour%10)" alpha="255" />
+							<Image x="-72-8" y="112" align="center" alignV="center" scale="1" src="ziti/ziti_1/time.png" srcid="int(#minute/10)" alpha="255" />
+							<Image x="72+8" y="112" align="center" alignV="center" scale="1" src="ziti/ziti_1/time.png" srcid="int(#minute%10)" alpha="255" />
+						</Group>
+						<PositionAnimation>
+							<Position x="0" y="0" time="0"/>
+							<Position x="0" y="-80" time="700"/>
+							<Position x="0" y="-80" time="500000000"/>
+						</PositionAnimation>
+						<AlphaAnimation> 
+							<Alpha a="0" time="0"/>  
+							<Alpha a="255" time="1000"/>  
+							<Alpha a="255" time="5000000000"/>  
+						</AlphaAnimation>
+					</Group>
+					<Group>
+						<Group visibility="eq(#ziti,2)">
+							<Image x="-72-8" y="-112-20" align="center" alignV="center" scale="1" src="ziti/ziti_2/time.png" srcid="int(#hour/10)" alpha="255" />
+							<Image x="72+8" y="-112-20" align="center" alignV="center" scale="1" src="ziti/ziti_2/time.png" srcid="int(#hour%10)" alpha="255" />
+							<Image x="-72-8" y="112" align="center" alignV="center" scale="1" src="ziti/ziti_2/time.png" srcid="int(#minute/10)" alpha="255" />
+							<Image x="72+8" y="112" align="center" alignV="center" scale="1" src="ziti/ziti_2/time.png" srcid="int(#minute%10)" alpha="255" />
+						</Group>
+						<PositionAnimation>
+							<Position x="0" y="0" time="0"/>
+							<Position x="0" y="-80" time="700"/>
+							<Position x="0" y="-80" time="500000000"/>
+						</PositionAnimation>
+						<AlphaAnimation> 
+							<Alpha a="0" time="0"/>  
+							<Alpha a="255" time="1000"/>  
+							<Alpha a="255" time="5000000000"/>  
+						</AlphaAnimation>
+					</Group>
+				</Group>
+				<DateTime x="0" y="260" align="center" alignV="center" size="32" color="#ffffff" format="M月d日 EEEE" alpha="255" visibility="eq(#heibai,0)">
+					<PositionAnimation>
+						<Position x="0" y="0" time="100"/>
+						<Position x="0" y="-80" time="800"/>
+						<Position x="0" y="-80" time="500000000"/>
+					</PositionAnimation>
+					<AlphaAnimation> 
+						<Alpha a="0" time="150"/>  
+						<Alpha a="255" time="1100"/>  
+						<Alpha a="255" time="5000000000"/>  
+					</AlphaAnimation>
+				</DateTime>
+				<DateTime x="0" y="320" align="center" alignV="center" size="32" color="#ffffff" format="农历NNNN" alpha="255" visibility="eq(#heibai,0)">
+					<PositionAnimation>
+						<Position x="0" y="0" time="100"/>
+						<Position x="0" y="-80" time="800"/>
+						<Position x="0" y="-80" time="500000000"/>
+					</PositionAnimation>
+					<AlphaAnimation> 
+						<Alpha a="0" time="150"/>  
+						<Alpha a="255" time="1100"/>  
+						<Alpha a="255" time="5000000000"/>  
+					</AlphaAnimation>
+				</DateTime>
+			</Group>
+			<!-- 时间样式1: 竖式左侧 -->
+			<Group x="200" y="600" align="center" alignV="center" visibility="eq(#shijian,2)">
+				<!-- 字体0 -->
+				<Group>
+					<Group>
+						<Group visibility="eq(#ziti,0)">
+							<Image x="-72-8" y="-112-20" align="center" alignV="center" scale="1" src="ziti/ziti_0/time.png" srcid="int(#hour/10)" alpha="255" />
+							<Image x="72+8" y="-112-20" align="center" alignV="center" scale="1" src="ziti/ziti_0/time.png" srcid="int(#hour%10)" alpha="255" />
+							<Image x="-72-8" y="112" align="center" alignV="center" scale="1" src="ziti/ziti_0/time.png" srcid="int(#minute/10)" alpha="255" />
+							<Image x="72+8" y="112" align="center" alignV="center" scale="1" src="ziti/ziti_0/time.png" srcid="int(#minute%10)" alpha="255" />
+						</Group>
+						<PositionAnimation>
+							<Position x="0" y="0" time="0"/>
+							<Position x="0" y="-80" time="700"/>
+							<Position x="0" y="-80" time="500000000"/>
+						</PositionAnimation>
+						<AlphaAnimation>
+							<Alpha a="0" time="0"/>
+							<Alpha a="255" time="1000"/>
+							<Alpha a="255" time="5000000000"/>
+						</AlphaAnimation>
+					</Group>
+					<Group>
+						<Group visibility="eq(#ziti,1)">
+							<Image x="-72-8" y="-112-20" align="center" alignV="center" scale="1" src="ziti/ziti_1/time.png" srcid="int(#hour/10)" alpha="255" />
+							<Image x="72+8" y="-112-20" align="center" alignV="center" scale="1" src="ziti/ziti_1/time.png" srcid="int(#hour%10)" alpha="255" />
+							<Image x="-72-8" y="112" align="center" alignV="center" scale="1" src="ziti/ziti_1/time.png" srcid="int(#minute/10)" alpha="255" />
+							<Image x="72+8" y="112" align="center" alignV="center" scale="1" src="ziti/ziti_1/time.png" srcid="int(#minute%10)" alpha="255" />
+						</Group>
+						<PositionAnimation>
+							<Position x="0" y="0" time="0"/>
+							<Position x="0" y="-80" time="700"/>
+							<Position x="0" y="-80" time="500000000"/>
+						</PositionAnimation>
+						<AlphaAnimation> 
+							<Alpha a="0" time="0"/>  
+							<Alpha a="255" time="1000"/>  
+							<Alpha a="255" time="5000000000"/>  
+						</AlphaAnimation>
+					</Group>
+					<Group>
+						<Group visibility="eq(#ziti,2)">
+							<Image x="-72-8" y="-112-20" align="center" alignV="center" scale="1" src="ziti/ziti_2/time.png" srcid="int(#hour/10)" alpha="255" />
+							<Image x="72+8" y="-112-20" align="center" alignV="center" scale="1" src="ziti/ziti_2/time.png" srcid="int(#hour%10)" alpha="255" />
+							<Image x="-72-8" y="112" align="center" alignV="center" scale="1" src="ziti/ziti_2/time.png" srcid="int(#minute/10)" alpha="255" />
+							<Image x="72+8" y="112" align="center" alignV="center" scale="1" src="ziti/ziti_2/time.png" srcid="int(#minute%10)" alpha="255" />
+						</Group>
+						<PositionAnimation>
+							<Position x="0" y="0" time="0"/>
+							<Position x="0" y="-80" time="700"/>
+							<Position x="0" y="-80" time="500000000"/>
+						</PositionAnimation>
+						<AlphaAnimation> 
+							<Alpha a="0" time="0"/>  
+							<Alpha a="255" time="1000"/>  
+							<Alpha a="255" time="5000000000"/>  
+						</AlphaAnimation>
+					</Group>
+				</Group>
+				<DateTime x="0" y="260" align="center" alignV="center" size="32" color="#ffffff" format="M月d日 EEEE" alpha="255" visibility="eq(#heibai,0)">
+					<PositionAnimation>
+						<Position x="0" y="0" time="100"/>
+						<Position x="0" y="-80" time="800"/>
+						<Position x="0" y="-80" time="500000000"/>
+					</PositionAnimation>
+					<AlphaAnimation> 
+						<Alpha a="0" time="150"/>  
+						<Alpha a="255" time="1100"/>  
+						<Alpha a="255" time="5000000000"/>  
+					</AlphaAnimation>
+				</DateTime>
+				<DateTime x="0" y="320" align="center" alignV="center" size="32" color="#ffffff" format="农历NNNN" alpha="255" visibility="eq(#heibai,0)">
+					<PositionAnimation>
+						<Position x="0" y="0" time="100"/>
+						<Position x="0" y="-80" time="800"/>
+						<Position x="0" y="-80" time="500000000"/>
+					</PositionAnimation>
+					<AlphaAnimation> 
+						<Alpha a="0" time="150"/>  
+						<Alpha a="255" time="1100"/>  
+						<Alpha a="255" time="5000000000"/>  
+					</AlphaAnimation>
+				</DateTime>
+			</Group>
+		</Group>
+	</Group>
+
+	<Group x="#move_x" y="0" visibility="eq(#diy_onoff,1)">
+		<Group>
+			<!-- 黑层 -->
+			<!-- <Rectangle x="#screen_width/2" y="#screen_height/2" w="#screen_width" h="#screen_height" align="center" alignV="center" fillColor="#000000" alpha="50" /> -->
+			<!-- diy导航 -->
+			<!-- <Rectangle x="#screen_width/2" y="#screen_height+1100" w="1080" h="1340" align="center" alignV="bottom" fillColor="#ffffff" cornerRadius="66,66" >
+				<PositionAnimation delay="0" repeat="1"> 
+					<Position x="0" y="0" time="0" varSpeedFlag="SineFun_Out"/>
+					<Position x="0" y="-1100" time="150"/>
+				</PositionAnimation> 
+			</Rectangle> -->
+			<Image x="#screen_width/2" y="#screen_height" w="1080" h="1340" align="center" alignV="bottom" src="img/beiban.png"></Image>
+			<Group x="#screen_width/2" y="#screen_height-125" align="center" alignV="center">						
+				<!-- <Button x="-400-30" y="-50-30" w="120" h="120">
+					<Triggers>
+						<Trigger action="up">
+							<VariableCommand expression="0" name="diy_btn" />
+						</Trigger>
+					</Triggers>
+				</Button>
+				<Button x="-250-30" y="-50-30" w="120" h="120">
+					<Triggers>
+						<Trigger action="up">
+							<VariableCommand expression="1" name="diy_btn" />
+						</Trigger>
+					</Triggers>
+				</Button> -->
+				<Button x="270-30-18" y="-45-30+24" w="242" h="160">
+					<Triggers>
+						<Trigger action="up">
+							<VariableCommand expression="0" name="diy_onoff" />
+						</Trigger>
+					</Triggers>
+				</Button>
+			</Group>
+			<!-- diy_时间样式 -->
+			<Group x="#screen_width/2" y="#screen_height-450-460" align="center" alignV="center" visibility="eq(#diy_btn,0)">
+				<Image x="0" y="0" align="center" alignV="center" src="img/diy_1_baise.png" visibility="eq(#heibai,0)" >
+				</Image>
+				<Image x="0" y="450+460-140" align="center" alignV="center" src="img/btn.png" visibility="eq(#heibai,0)" >
+				</Image>
+
+				<!-- <Image x="-470+460*0" y="-300+239*0" align="left" alignV="top" src="img/test.png" >
+				</Image> -->
+								
+				<!-- <Button x="-470+240*3" y="-300+312*0" w="218" h="290">
+					<Triggers>
+						<Trigger action="up">
+							<VariableCommand expression="3" name="shijian" persist="true" delay="0" />
+						</Trigger>
+					</Triggers>
+				</Button>
+				<Button x="-470+240*0" y="-300+312*1" w="218" h="290">
+					<Triggers>
+						<Trigger action="up">
+							<VariableCommand expression="4" name="shijian" persist="true" delay="0" />
+						</Trigger>
+					</Triggers>
+				</Button>
+				<Button x="-470+240*1" y="-300+312*1" w="218" h="290">
+					<Triggers>
+						<Trigger action="up">
+							<VariableCommand expression="5" name="shijian" persist="true" delay="0" />
+						</Trigger>
+					</Triggers>
+				</Button>
+				<Button x="-470+240*2" y="-300+312*1" w="218" h="290">
+					<Triggers>
+						<Trigger action="up">
+							<VariableCommand expression="6" name="shijian" persist="true" delay="0" />
+						</Trigger>
+					</Triggers>
+				</Button>
+				<Button x="-470+240*3" y="-300+312*1" w="218" h="290">
+					<Triggers>
+						<Trigger action="up">
+							<VariableCommand expression="7" name="shijian" persist="true" delay="0" />
+						</Trigger>
+					</Triggers>
+				</Button> -->
+			</Group>
+		</Group>
+	</Group>
+	<!-- 底部 -->
+	<Group x="#move_x" y="#screen_height-(120)+#move_y/5" visibility="eq(#diy_onoff,0)" alpha="255">
+		<Image align="center" alignV="center" name="DefaultScreen_leftIcon" alpha="255" scale="1" src="img/left_icon.png" srcExp="默认" x="100+170" y="0-170" visibility="eq(#heibai,0)*eq(#dibu_xianshi,0)" />
+		<Image align="center" alignV="center" name="DefaultScreen_rightIcon" alpha="255" scale="1" src="img/right_icon.png" srcExp="默认" x="#screen_width-(100)-170" y="0-170" visibility="eq(#you_onoff,0)*eq(#heibai,0)*eq(#dibu_xianshi,0)" />
+		<Image align="center" alignV="center" name="DefaultScreen_rightIcon" alpha="255" scale="1" src="img/right_icon_2.png" srcExp="默认" x="#screen_width-(100)" y="0" visibility="eq(#you_onoff,1)*eq(#heibai,0)*eq(#dibu_xianshi,0)" />
+
+		<Image align="center" alignV="top" src="img/left_card.png" alpha="255" srcExp="默认" x="#screen_width/2" y="-#screen_height+1100" visibility="eq(#left_onoff,1)">
+			<!-- <PositionAnimation>
+				<Position x="0" y="0" time="0"/>
+				<Position x="0" y="-80" time="700"/>
+				<Position x="0" y="-80" time="500000000"/>
+			</PositionAnimation>
+			<AlphaAnimation> 
+				<Alpha a="0" time="0"/>  
+				<Alpha a="255" time="1000"/>  
+				<Alpha a="255" time="5000000000"/>  
+			</AlphaAnimation> -->
+		</Image>
+		<Image align="center" alignV="top" src="img/right_card.png" alpha="255" srcExp="默认" x="#screen_width/2" y="-#screen_height+1100" visibility="eq(#right_onoff,1)">
+			<!-- <PositionAnimation>
+				<Position x="0" y="0" time="0"/>
+				<Position x="0" y="-80" time="700"/>
+				<Position x="0" y="-80" time="500000000"/>
+			</PositionAnimation>
+			<AlphaAnimation> 
+				<Alpha a="0" time="0"/>  
+				<Alpha a="255" time="1000"/>  
+				<Alpha a="255" time="5000000000"/>  
+			</AlphaAnimation> -->
+		</Image>
+
+
+		<!-- <Image align="center" alignV="top" src="img/hong.png" alpha="200" srcExp="默认" x="#screen_width/2-251" y="-#screen_height+1100+50" w="206" h="221" visibility="eq(#left_onoff,1)">
+		</Image>
+		<Image align="center" alignV="top" src="img/hong.png" alpha="200" srcExp="默认" x="#screen_width/2+3" y="-#screen_height+1100+50" w="206" h="221" visibility="eq(#left_onoff,1)">
+		</Image>
+		<Image align="center" alignV="top" src="img/hong.png" alpha="200" srcExp="默认" x="#screen_width/2+251" y="-#screen_height+1100+50" w="206" h="221" visibility="eq(#left_onoff,1)">
+		</Image>
+
+		<Image align="center" alignV="top" src="img/hong.png" alpha="200" srcExp="默认" x="#screen_width/2-251" y="-#screen_height+1100+50+365" w="206" h="221" visibility="eq(#left_onoff,1)">
+		</Image>
+		<Image align="center" alignV="top" src="img/hong.png" alpha="200" srcExp="默认" x="#screen_width/2+3" y="-#screen_height+1100+50+365" w="206" h="221" visibility="eq(#left_onoff,1)">
+		</Image>
+		<Image align="center" alignV="top" src="img/hong.png" alpha="200" srcExp="默认" x="#screen_width/2+251" y="-#screen_height+1100+50+365" w="206" h="221" visibility="eq(#left_onoff,1)">
+		</Image> -->
+		<!-- <Image align="left" alignV="top" src="img/hong.png" alpha="200" srcExp="默认" x="#screen_width/2-170/2" y="-#screen_height+1100" w="170" h="170" visibility="eq(#right_onoff,1)">
+		</Image> -->
+
+
+		<Button x="#screen_width/2-251-206/2" y="-#screen_height+1100+50" w="206" h="221" visibility="eq(#left_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<VariableCommand expression="0" name="ziti" persist="true" delay="0" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<Button x="#screen_width/2+3-206/2" y="-#screen_height+1100+50" w="206" h="221" visibility="eq(#left_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<VariableCommand expression="1" name="ziti" persist="true" delay="0" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<Button x="#screen_width/2+251-206/2" y="-#screen_height+1100+50" w="206" h="221" visibility="eq(#left_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<VariableCommand expression="2" name="ziti" persist="true" delay="0" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<Button x="#screen_width/2-251-206/2" y="-#screen_height+1100+50+365" w="206" h="221" visibility="eq(#left_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<VariableCommand expression="0" name="shijian" persist="true" delay="0" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<Button x="#screen_width/2+3-206/2" y="-#screen_height+1100+50+365" w="206" h="221" visibility="eq(#left_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<VariableCommand expression="1" name="shijian" persist="true" delay="0" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<Button x="#screen_width/2+251-206/2" y="-#screen_height+1100+50+365" w="206" h="221" visibility="eq(#left_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<VariableCommand expression="2" name="shijian" persist="true" delay="0" />
+				</Trigger>
+			</Triggers>
+		</Button>
+
+		
+		<!-- 抖音 -->
+		<Button x="#screen_width/2-170/2-296" y="-#screen_height+1100+25" w="170" h="170" visibility="eq(#right_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<IntentCommand action="android.intent.action.MAIN" package="com.ss.android.ugc.aweme" class="com.ss.android.ugc.aweme.splash.SplashActivity" />
+					<ExternCommand command="unlock" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<!-- 微信 -->
+		<Button x="#screen_width/2-170/2-126" y="-#screen_height+1100+25" w="170" h="170" visibility="eq(#right_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<IntentCommand action="android.intent.action.MAIN" package="com.tencent.mm" class="com.tencent.mm.ui.LauncherUI" />
+					<ExternCommand command="unlock" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<!-- 淘宝 -->
+		<Button x="#screen_width/2-170/2-296" y="-#screen_height+1100+195" w="170" h="170" visibility="eq(#right_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<IntentCommand action="android.intent.action.MAIN" package="com.taobao.taobao" class="com.taobao.tao.welcome.Welcome" />
+					<ExternCommand command="unlock" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<!-- 支付宝 -->
+		<Button x="#screen_width/2-170/2-126" y="-#screen_height+1100+195" w="170" h="170" visibility="eq(#right_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<IntentCommand action="android.intent.action.MAIN" package="com.eg.android.AlipayGphone" class="com.eg.android.AlipayGphone.AlipayLogin" />
+					<ExternCommand command="unlock" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<!-- 支付宝扫一扫 -->
+		<Button x="#screen_width/2-170/2-303" y="-#screen_height+1100+444" w="170" h="170" visibility="eq(#right_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<IntentCommand action="android.intent.action.MAIN" package="com.eg.android.AlipayGphone" class="com.alipay.mobile.scan.as.main.MainCaptureActivity" />
+					<ExternCommand command="unlock" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<!-- 支付宝付款码 -->
+		<Button x="#screen_width/2-170/2-133" y="-#screen_height+1100+444" w="170" h="170" visibility="eq(#right_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<IntentCommand action="android.intent.action.MAIN" package="com.eg.android.AlipayGphone" class="com.eg.android.AlipayGphone.FastStartActivity" />
+					<ExternCommand command="unlock" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<!-- 微信扫一扫 -->
+		<Button x="#screen_width/2-170/2+140" y="-#screen_height+1100+444" w="170" h="170" visibility="eq(#right_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<IntentCommand action="android.intent.action.MAIN" package="com.tencent.mm" class="com.tencent.mm.plugin.scanner.ui.BaseScanUI" />
+					<ExternCommand command="unlock" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<!-- 微信付款码 -->
+		<Button x="#screen_width/2-170/2+313" y="-#screen_height+1100+444" w="170" h="170" visibility="eq(#right_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<IntentCommand action="android.intent.action.MAIN" package="com.tencent.mm" class="com.tencent.mm.plugin.offline.ui.WalletOfflineEntranceUI" />
+					<ExternCommand command="unlock" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<!-- 便签 -->
+		<Button x="#screen_width/2-170/2-325" y="-#screen_height+1100+672" w="170" h="170" visibility="eq(#right_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<IntentCommand action="android.intent.action.MAIN" package="com.hihonor.notepad" class="com.hihonor.notes.NotePadActivity" />
+					<ExternCommand command="unlock" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<!-- 运动健康 -->
+		<Button x="#screen_width/2-170/2-108" y="-#screen_height+1100+672" w="170" h="170" visibility="eq(#right_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<IntentCommand action="android.intent.action.MAIN" package="com.hihonor.health" class="com.hihonor.health.splash.SplashActivity" />
+					<ExternCommand command="unlock" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<!-- 指南针 -->
+		<Button x="#screen_width/2-170/2+108" y="-#screen_height+1100+672" w="170" h="170" visibility="eq(#right_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<IntentCommand action="android.intent.action.MAIN" package="com.hihonor.compass" class="com.hihonor.compass.MainActivity" />
+					<ExternCommand command="unlock" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<!-- 相机 -->
+		<Button x="#screen_width/2-170/2+325" y="-#screen_height+1100+672" w="170" h="170" visibility="eq(#right_onoff,1)">
+			<Triggers>
+				<Trigger action="up">
+					<IntentCommand action="android.intent.action.MAIN" package="com.hihonor.camera" class="com.hihonor.camera" />
+					<ExternCommand command="unlock" />
+				</Trigger>
+			</Triggers>
+		</Button>
+
+
+		<Button x="100+60-150/2" y="0-60-150/2" w="150" h="150">
+			<Triggers>
+				<Trigger action="up">
+					<VariableCommand expression="ifelse(eq(#left_onoff,1),0,1)" name="left_onoff" />
+					<VariableCommand expression="0" name="right_onoff" />
+				</Trigger>
+			</Triggers>
+		</Button>
+		<Button x="#screen_width-(100)-60-150/2" y="0-60-150/2" w="150" h="150">
+			<Triggers>
+				<Trigger action="up">
+					<VariableCommand expression="ifelse(eq(#right_onoff,1),0,1)" name="right_onoff" />
+					<VariableCommand expression="0" name="left_onoff" />
+				</Trigger>
+			</Triggers>
+		</Button>
+	</Group>
+				<!-- <Triggers>
+				<Trigger action="up">
+					<IntentCommand action="android.intent.action.MAIN" package="com.oppo.camera" class="com.oppo.camera.Camera" />
+					<ExternCommand command="unlock" />
+				</Trigger>
+			</Triggers> -->
+	<!-- <Group visibility="eq(#tishi,0)*eq(#move_x,0)*eq(#diy_onoff,0)">
+		<Image x="200" y="#screen_height/2+300" src="img/tishi_1.png" align="center" alignV="center">
+			<PositionAnimation delay="0" repeat="0">
+				<Position x="0" y="0" time="0" />
+				<Position x="120" y="0" time="1000" />
+				<Position x="0" y="0" time="2000" />
+			</PositionAnimation>
+		</Image>
+		<Image x="100" y="#screen_height-250" src="img/tishi_2.png" align="center" alignV="bottom">
+			<PositionAnimation delay="0" repeat="0">
+				<Position x="0" y="0" time="0" />
+				<Position x="0" y="120" time="1000" />
+				<Position x="0" y="0" time="2000" />
+			</PositionAnimation>
+		</Image>
+		<Image x="#screen_width-100" y="#screen_height-250" src="img/tishi_3.png" align="center" alignV="bottom">
+			<PositionAnimation delay="0" repeat="0">
+				<Position x="0" y="0" time="0" />
+				<Position x="0" y="120" time="1000" />
+				<Position x="0" y="0" time="2000" />
+			</PositionAnimation>
+		</Image>
+		<Image x="#screen_width/2" y="#screen_height-500" align="center" alignV="center" w="320" h="150" alpha="200" src="img/zhenzhidaole.png" />
+		<Text x="#screen_width/2" y="#screen_height-500" align="center" alignV="center" color="#000000" text="朕知道了" size="42" bold="true" />
+		<Button x="#screen_width/2-320/2" y="#screen_height-500-150/2" w="320" h="150">
+			<Triggers>
+				<Trigger action="up">
+					<VariableCommand expression="1" name="tishi" persist="true" delay="0" />
+				</Trigger>
+			</Triggers>
+		</Button>
+	</Group>
+	<Group visibility="eq(#xiangji_changan,1)">
+		<Rectangle x="#screen_width/2" y="#screen_height-200" align="center" alignV="center" w="300" h="100" cornerRadius="50,50" fillColor="#ffffff" alpha="200" />
+		<Text x="#screen_width/2" y="#screen_height-200" align="center" alignV="center" color="#000000" text="长按打开相机" size="32" bold="true" />
+	</Group> -->
+	<!-- 解锁【2160雷区】 -->
+	<!-- 上滑判断 -->
+	<Var name="unlock_pan" expression="ifelse(ge(#touch_begin_y-#touch_y,200),1,0)" />
+	<Var name="move_y" expression="ifelse(lt(#unlocker.move_y,0),#unlocker.move_y,0)" />
+	<Unlocker name="unlocker" alwaysShow="true" bounceInitSpeed="2000" bounceAccelation="1500">
+		<StartPoint x="#touch_begin_x" y="#touch_begin_y" w="1" h="1">
+			<NormalState>
+			</NormalState>
+		</StartPoint>
+		<EndPoint x="#touch_x" y="ifelse(#unlock_pan,#touch_y,-100)" w="1" h="1">
+		</EndPoint>
+	</Unlocker>
+</Lockscreen>
